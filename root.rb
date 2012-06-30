@@ -13,7 +13,7 @@ class Root < Formula
     # Build out of source
     mkdir "cmake_oos"
     cd    "cmake_oos"
-    system "cmake", "..", *std_cmake_args
+    system "cmake", "..", "-Dcocoa=ON", *std_cmake_args
     system "make install"
   end
 
@@ -22,6 +22,11 @@ class Root < Formula
     # "false" with the main program this formula installs, but it'd be nice if you
     # were more thorough. Run the test with `brew test root`.
     system "false"
+  end
+
+  def patches
+    # Fix the cocoa mode not compiling, due to a missing reference in the CMakeLists.txt
+    DATA
   end
 
   def caveats; <<-EOS.undent
@@ -39,3 +44,17 @@ class Root < Formula
     EOS
   end
 end
+
+__END__
+diff --git a/graf2d/cocoa/CMakeLists.txt b/graf2d/cocoa/CMakeLists.txt
+index 556051c..a64acbf 100644
+--- a/graf2d/cocoa/CMakeLists.txt
++++ b/graf2d/cocoa/CMakeLists.txt
+@@ -5,6 +5,7 @@
+ 
+ ROOT_USE_PACKAGE(graf2d/quartz)
+ ROOT_USE_PACKAGE(gui/gui)
++ROOT_USE_PACKAGE(graf3d/gl)
+ 
+ add_definitions("-ObjC++ -std=c++11")
+ 
