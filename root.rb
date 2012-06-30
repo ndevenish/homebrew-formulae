@@ -8,6 +8,7 @@ class Root < Formula
   url 'ftp://root.cern.ch/root/root_v5.34.00.source.tar.gz'
   sha1 'e7c8352d92be8510b36001efb020f3eb0bf22ed1'
   version '5.34.00'
+  keg_only "See Caveats; ROOT likes to be included through thisroot.sh"
 
   depends_on 'cmake' => :build
 
@@ -28,5 +29,20 @@ class Root < Formula
     # "false" with the main program this formula installs, but it'd be nice if you
     # were more thorough. Run the test with `brew test root`.
     system "false"
+  end
+
+  def caveats; <<-EOS.undent
+    Because ROOT depends on several installation-dependent
+    environment variables to function properly, you should
+    add the following commands to your shell initialization
+    script (.bashrc/.profile/etc.), or call them directly
+    before using ROOT.
+  
+    For csh/tcsh users:
+      source #{prefix}/thisroot.csh
+    For bash/zsh users:
+      . #{prefix}/thisroot.sh
+  
+    EOS
   end
 end
