@@ -15,6 +15,7 @@ class Root < Formula
     cd    "cmake_oos"
     system "cmake", "..", "-Dcocoa=ON", *std_cmake_args
     system "make install"
+    ln "#{prefix}/bin/root.exe" "#{prefix}/bin/root"
   end
 
   def test
