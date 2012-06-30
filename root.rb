@@ -39,9 +39,9 @@ class Root < Formula
     before using ROOT.
   
     For csh/tcsh users:
-      source #{prefix}/thisroot.csh
+      source #{prefix}/bin/thisroot.csh
     For bash/zsh users:
-      . #{prefix}/thisroot.sh
+      . #{prefix}/bin/thisroot.sh
   
     EOS
   end
