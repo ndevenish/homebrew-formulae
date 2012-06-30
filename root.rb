@@ -9,13 +9,26 @@ class Root < Formula
 
   depends_on 'cmake' => :build
 
+  def options
+    [
+      ['--cocoa', "Use the cocoa mode"],
+    ]
+  end
   def install
     # Build out of source
     mkdir "cmake_oos"
     cd    "cmake_oos"
-    system "cmake", "..", "-Dcocoa=ON", *std_cmake_args
-    system "make install"
-    ln "#{prefix}/bin/root.exe" "#{prefix}/bin/root"
+    if ARGV.include? '--cocoa'
+      system "cmake", "..", "-Dcocoa=ON", *std_cmake_args
+      system "make install"
+      ln "#{prefix}/bin/root.exe" "#{prefix}/bin/root"
+    else
+      system "cmake", "..", *std_cmake_args
+      system "make install"
+    end
+    
+    
+
   end
 
   def test
