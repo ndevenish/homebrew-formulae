@@ -1,8 +1,5 @@
 require 'formula'
 
-# Documentation: https://github.com/mxcl/homebrew/wiki/Formula-Cookbook
-# PLEASE REMOVE ALL GENERATED COMMENTS BEFORE SUBMITTING YOUR PULL REQUEST!
-
 class Root < Formula
   homepage 'http://root.cern.ch'
   url 'ftp://root.cern.ch/root/root_v5.34.00.source.tar.gz'
@@ -13,15 +10,11 @@ class Root < Formula
   depends_on 'cmake' => :build
 
   def install
-    # ENV.x11 # if your formula requires any X11 headers
-    # ENV.j1  # if your formula's build system can't parallelize
-
     # Build out of source
     mkdir "cmake_oos"
     cd    "cmake_oos"
     system "cmake", "..", *std_cmake_args
-    system "make"
-    system "make install" # if this fails, try separate make/make install steps
+    system "make install"
   end
 
   def test
