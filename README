@@ -1,2 +1,7 @@
-Formulae that I use for homebrew
+Homebrew Formulae
+=================
 
+This repository contains a homebrew tap for packages that I use. Currently this is:
+
+  - root
+  - msrt
