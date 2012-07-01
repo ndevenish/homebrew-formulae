@@ -6,6 +6,40 @@ class Msrt < Formula
   sha1 '8dd80f582149052c87907f675ec3089fc3dc7a2d'
 
   def install
+    # Build the man page from help
+    system "./msrt help > msrt.1"
+    inreplace 'msrt.1' do |s| 
+      # Make the section headers, section headers
+      s.gsub! /^(?=[^\s])/, '.SH '
+      # Add the header
+      s.insert(0,".TH MSRT 1 \"\" \"\" \"User Manuals\"\n")
+      # s.gsub! /^\s{4}(?=msrt.*$)/, '.IP '
+      # Replace the command options with italics
+      s.gsub! /\[\s?(-[^\]]+?)\s(.+?)\]/, "\n.B [ \\1\n.I \\2\n.B ]"
+      # And the command switches with bold
+      s.gsub! /\[\s?(-[^\]]+?)\]/, "\n.B [\\1]"
+      # Make the msrt lines bold
+      s.gsub! /^ {4}msrt (.+?)(?=\s)/, "\n.B msrt \\1"
+      # Replace the rogue <>
+      s.gsub! /^(\s+)<compiler_label>/, "\\1compiler_label"
+      # Any bold <> should be italic, and tidy the ]
+      s.gsub! /(<.+?>)(?=\s)/, "\n.I \\1"
+      s.gsub! />\s\]/, ">\n.B ]"
+      # Italicise optional positional parameters
+      s.gsub! /\[([^\s-].+)\]/, "[\n.I \\1\n.B ]"
+
+      # Align the 12-step numbers
+      s.gsub! /\s+(\d+)\)/, "\n.IP \\1)\n"
+      # Merge the paragraphs in the 12-step - rely on the 
+      # fact that someone inserted tabs there
+      s.gsub! /^\t/, " "
+      # And, add an extra indentation for the next periods
+      s.gsub! /\t(.+)^/, ".RS\n\\1\n.RE\n"
+      # escape the lone \
+      s.gsub! /\\/, "\\\\\\\\"
+    end
+
+    man1.install "msrt.1"
     bin.install "msrt"
   end
 
