@@ -34,7 +34,7 @@ class Msrt < Formula
       # fact that someone inserted tabs there
       s.gsub! /^\t/, " "
       # And, add an extra indentation for the next periods
-      s.gsub! /\t(.+)^/, ".RS\n\\1\n.RE\n"
+      s.gsub! /\t(.+)/, "\n.RS\n\\1\n.RE\n"
       # escape the lone \
       s.gsub! /\\/, "\\\\\\\\"
     end
