@@ -37,6 +37,8 @@ class Msrt < Formula
       s.gsub! /\t(.+)/, "\n.RS\n\\1\n.RE\n"
       # escape the lone \
       s.gsub! /\\/, "\\\\\\\\"
+      # Replace \n\s with \s\n to merge paragraphs
+      s.gsub! /\n /, " \n"
     end
 
     man1.install "msrt.1"
