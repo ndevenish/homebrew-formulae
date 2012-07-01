@@ -41,6 +41,9 @@ class Msrt < Formula
       s.gsub! /\n /, " \n"
     end
 
+    # Don't use gmake...
+    inreplace "msrt", /gmake/, "make"
+    
     man1.install "msrt.1"
     bin.install "msrt"
   end
