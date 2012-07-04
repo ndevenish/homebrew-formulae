@@ -12,22 +12,24 @@ class Root < Formula
   def options
     [
       ['--cocoa', "Use the cocoa mode"],
+      ['--minuit2', "Compile Minuit2"],
     ]
   end
   def install
     # Build out of source
     mkdir "cmake_oos"
     cd    "cmake_oos"
+    # Extend the CMake arguments
+    args = std_cmake_args
+    args.push("-Dminuit2=ON") if ARGV.include? '--minuit2'
+    args.push("-Dcocoa=ON") if ARGV.include? '--cocoa'
+
+    system "cmake", "..", *args
+    system "make install"
+
     if ARGV.include? '--cocoa'
-      system "cmake", "..", "-Dcocoa=ON", *std_cmake_args
-      system "make install"
       ln "#{prefix}/bin/root.exe" "#{prefix}/bin/root"
-    else
-      system "cmake", "..", *std_cmake_args
-      system "make install"
     end
-    
-    
 
   end
 
