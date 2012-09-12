@@ -2,9 +2,9 @@ require 'formula'
 
 class Root < Formula
   homepage 'http://root.cern.ch'
-  url 'ftp://root.cern.ch/root/root_v5.34.00.source.tar.gz'
-  sha1 'e7c8352d92be8510b36001efb020f3eb0bf22ed1'
-  version '5.34.00'
+  url 'ftp://root.cern.ch/root/root_v5.34.01.source.tar.gz'
+  sha1 '6e0ed779568f1f9eb0f9af79bef26207444a4173'
+  version '5.34.01'
   keg_only "See Caveats; ROOT likes to be included through thisroot.sh"
 
   depends_on 'cmake' => :build
